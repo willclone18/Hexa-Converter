@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <title>Conversor de Cores RGB/Hexadecimal</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <style type="text/css">
+            *{margin:0;padding:0;}
+            #test {
+                width: 50%;
+                min-height: 20%;
+                margin: 25px 25%;
+                background-color: #CCC;
+            }
+            footer { min-height: 25%; }
+        </style>
+    </head>
+    <body class="container-fluid">
+        <header class="row">
+        </header>
+        <section class="row">
+            <div id="rgb">
+                <div id="r-result" class="col-md-4">
+                    <p>Red</p>
+                    <input class="form-control" id="red-value" maxlength="3" onChange="getColorsRGB();" />
+                </div>
+                <div id="g-result" class="col-md-4">
+                    <p>Green</p>
+                    <input class="form-control" id="green-value" maxlength="3" onChange="getColorsRGB();"/>
+                </div>
+                <div id="b-result" class="col-md-4">
+                    <p>Blue</p>
+                    <input class="form-control" id="blue-value" maxlength="3" onChange="getColorsRGB();"/>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div id="hexa">
+                <div id="hexa-result" class="col-md-12">
+                    <p>Hexadecimal</p>
+                    <input class="form-control" id="hexa-value" maxlength="6" onChange="getColorHexa();"/>
+                </div>
+            </div>
+        </section>
+        <footer class="row">
+            <p>Preview</p>
+            <div id="test"></div>
+        </footer>
+        <script type="text/javascript">
+            //GLOBAL VARIABLES
+            var hexa = document.getElementById("hexa-value");
+            var test = document.getElementById("test");
+            var r = document.getElementById("red-value");
+            var b = document.getElementById("blue-value");
+            var g = document.getElementById("green-value");
+
+            function getColorsRGB() {
+                if(r.value != '' && b.value != '' && g.value != '') {
+                    var red = (r.value > 0 && r.value < 256?parseInt(r.value):'00');
+                    var blue = (b.value > 0 && b.value < 256?parseInt(b.value):'00');
+                    var green = (g.value > 0 && g.value < 256?parseInt(g.value):'00');
+                    var result = '';
+                    var resultHexa = '';
+                    var pad = '00';
+                    red = red.toString(16);
+                    blue = blue.toString(16);
+                    green = green.toString(16);
+                    result = '#';
+                    resultHexa += pad.substring(0, pad.length - red.length) + red;
+                    resultHexa += pad.substring(0, pad.length - green.length) + green;
+                    resultHexa += pad.substring(0, pad.length - blue.length) + blue;
+                    hexa.value = resultHexa;
+                    test.style.backgroundColor = result + resultHexa;
+                }
+            }
+
+            function getColorHexa() {
+                if(hexa.value != '' && hexa.value.length > 5 && hexa.value.length < 7) {
+                    var hexavalue = '';
+                    var result = '';
+                    hexaValue = hexa.value;
+                    hexaValue = hexaValue.split('');
+                    var red = parseInt(hexaValue[0] + hexaValue[1], 16);
+                    var blue = parseInt(hexaValue[4] + hexaValue[5], 16);
+                    var green = parseInt(hexaValue[2] + hexaValue[3], 16);
+                    result += r.value = red.toString();
+                    result += b.value = blue.toString();
+                    result += g.value = green.toString();
+                    test.style.backgroundColor = '#' + result;
+                }
+            }
+        </script>
+    </body>
+</html>
